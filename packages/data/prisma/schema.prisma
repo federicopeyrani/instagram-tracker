@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Update {
+  timestamp DateTime @id
+
+  followEvents FollowEvent[]
+}
+
+model FollowEvent {
+  username  String
+  timestamp DateTime
+  type      String // [follower, following]
+
+  userId          String
+  updateReference DateTime
+
+  user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade)
+  update Update @relation(fields: [updateReference], references: [timestamp], onUpdate: Cascade, onDelete: Cascade)
+
+  @@id([username, timestamp, type])
+}
+
+model User {
+  id                   String  @id
+  whitelistNotFollower Boolean @default(false)
+
+  followEvents FollowEvent[]
+}

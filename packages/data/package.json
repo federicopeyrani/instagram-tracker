@@ -1,0 +1,13 @@
+{
+  "name": "@repo/data",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "prisma migrate dev --name init"
+  },
+  "dependencies": {
+    "@prisma/client": "5.18.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.18.0"
+  }
+}
